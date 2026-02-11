@@ -1,6 +1,6 @@
-// IMPORTANT: Store API keys securely - never expose in frontend code
-// This is for demonstration only. In production, use environment variables and backend proxy
-const apikeys = "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";
+// API Configuration - Backend proxy handles the actual API key
+// The key is now stored securely in .env and never exposed in frontend code
+const API_PROXY_URL = 'http://localhost:3000/api/chat';
 
 const chatBox = document.getElementById("chatBox");
 const userInput = document.getElementById("userInput");
@@ -113,14 +113,12 @@ async function sendMessage() {
   const typingMsg = addMessage("Typing...", "bot");
 
   try {
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    const response = await fetch(API_PROXY_URL, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${apikeys}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "openai/gpt-4o-mini",
         messages: conversationHistory
       })
     });
